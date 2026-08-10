@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Client Forex Platform</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+    }
+
+    header {
+      padding: 20px;
+      background: #111827;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .welcome {
+      margin-bottom: 20px;
+    }
+
+    .packages {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .package {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #334155;
+    }
+
+    .package h2 {
+      margin-top: 0;
+    }
+
+    .fee {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: 0;
+      border-radius: 8px;
+      background: #22c55e;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #16a34a;
+    }
+
+    .status {
+      margin-top: 25px;
+      padding: 15px;
+      background: #1e293b;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Multi-Client Forex Platform</h1>
+</header>
+
+<div class="container">
+
+  <div class="welcome">
+    <h2>Client Dashboard</h2>
+    <p>Welcome to your account.</p>
+    <p><strong>Client ID:</strong> DEMO-001</p>
+  </div>
+
+  <h2>Choose Your Package</h2>
+
+  <div class="packages">
+
+    <div class="package">
+      <h2>Beginner</h2>
+      <p>Starting tier: $10+</p>
+      <div class="fee">15% Fee</div>
+      <button>Choose Package</button>
+    </div>
+
+    <div class="package">
+      <h2>Economy</h2>
+      <p>Starting tier: $50+</p>
+      <div class="fee">20% Fee</div>
+      <button>Choose Package</button>
+    </div>
+
+    <div class="package">
+      <h2>Standard</h2>
+      <p>Starting tier: $200+</p>
+      <div class="fee">25% Fee</div>
+      <button>Choose Package</button>
+    </div>
+
+    <div class="package">
+      <h2>Premium</h2>
+      <p>Starting tier: $500+</p>
+      <div class="fee">30% Fee</div>
+      <button>Choose Package</button>
+    </div>
+
+  </div>
+
+  <div class="status">
+    <h2>Account Status</h2>
+    <p>Trading account: Not connected</p>
+    <p>Platform: MT5</p>
+    <p>Status: Awaiting connection</p>
+  </div>
+
+</div>
+
+</body>
+</html>
