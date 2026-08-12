@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-Client Forex Platform</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+  }
+  header {
+    background: #111827;
+    padding: 24px 20px;
+    text-align: center;
+    border-bottom: 1px solid #334155;
+  }
+  header h1 { margin: 0; font-size: 28px; }
+  .container { max-width: 900px; margin: auto; padding: 28px 18px 50px; }
+  h2 { font-size: 26px; margin-top: 10px; }
+  .welcome { color: #cbd5e1; font-size: 17px; }
+  .client-id {
+    display: inline-block;
+    margin: 12px 0 25px;
+    padding: 9px 13px;
+    background: #1e293b;
+    border-radius: 8px;
+  }
+  .packages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 18px;
+    padding: 22px;
+  }
+  .card h3 { font-size: 26px; margin: 0 0 18px; }
+  .amount { color: #e2e8f0; margin-bottom: 12px; }
+  .fee { font-size: 23px; font-weight: bold; margin-bottom: 20px; }
+  button {
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #22c55e;
+    color: white;
+  }
+  button:active { transform: scale(.98); }
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.72);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal {
+    width: 100%;
+    max-width: 480px;
+    background: #111827;
+    border: 1px solid #475569;
+    border-radius: 18px;
+    padding: 24px;
+  }
+  .modal h3 { margin-top: 0; font-size: 25px; }
+  .summary {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 16px;
+    line-height: 1.8;
+    margin: 16px 0;
+  }
+  .secondary {
+    background: #475569;
+    margin-top: 10px;
+  }
+  .notice {
+    display: none;
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 10px;
+    background: #14532d;
+    color: #dcfce7;
+  }
+  footer {
+    text-align: center;
+    color: #94a3b8;
+    padding: 25px;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Multi-Client Forex Platform</h1>
+</header>
+
+<main class="container">
+  <h2>Client Dashboard</h2>
+  <p class="welcome">Welcome to your account.</p>
+  <div class="client-id"><strong>Client ID:</strong> DEMO-001</div>
+
+  <h2>Choose Your Package</h2>
+
+  <section class="packages">
+    <div class="card">
+      <h3>Beginner</h3>
+      <div class="amount">Starting tier: $10+</div>
+      <div class="fee">15% Fee</div>
+      <button onclick="openPackage('Beginner', '$10+', '15%')">Choose Package</button>
+    </div>
+
+    <div class="card">
+      <h3>Economy</h3>
+      <div class="amount">Starting tier: $50+</div>
+      <div class="fee">20% Fee</div>
+      <button onclick="openPackage('Economy', '$50+', '20%')">Choose Package</button>
+    </div>
+
+    <div class="card">
+      <h3>Standard</h3>
+      <div class="amount">Starting tier: $200+</div>
+      <div class="fee">25% Fee</div>
+      <button onclick="openPackage('Standard', '$200+', '25%')">Choose Package</button>
+    </div>
+
+    <div class="card">
+      <h3>Premium</h3>
+      <div class="amount">Starting tier: $500+</div>
+      <div class="fee">30% Fee</div>
+      <button onclick="openPackage('Premium', '$500+', '30%')">Choose Package</button>
+    </div>
+  </section>
+</main>
+
+<div class="modal-backdrop" id="packageModal">
+  <div class="modal">
+    <h3>Confirm Your Package</h3>
+
+    <div class="summary">
+      <div><strong>Package:</strong> <span id="packageName"></span></div>
+      <div><strong>Starting tier:</strong> <span id="packageAmount"></span></div>
+      <div><strong>Performance fee:</strong> <span id="packageFee"></span></div>
+    </div>
+
+    <button onclick="confirmPackage()">Confirm Package</button>
+    <button class="secondary" onclick="closePackage()">Cancel</button>
+
+    <div class="notice" id="confirmation">
+      Package selected successfully for this demo account.
+    </div>
+  </div>
+</div>
+
+<footer>
+  Demo interface only. No real deposits, payments, or trades are executed by this page.
+</footer>
+
+<script>
+let selectedPackage = null;
+
+function openPackage(name, amount, fee) {
+  selectedPackage = { name, amount, fee };
+
+  document.getElementById("packageName").textContent = name;
+  document.getElementById("packageAmount").textContent = amount;
+  document.getElementById("packageFee").textContent = fee;
+  document.getElementById("confirmation").style.display = "none";
+  document.getElementById("packageModal").style.display = "flex";
+}
+
+function closePackage() {
+  document.getElementById("packageModal").style.display = "none";
+}
+
+function confirmPackage() {
+  if (!selectedPackage) return;
+
+  document.getElementById("confirmation").style.display = "block";
+}
+
+document.getElementById("packageModal").addEventListener("click", function(event) {
+  if (event.target === this) closePackage();
+});
+</script>
+
+</body>
+</html>
