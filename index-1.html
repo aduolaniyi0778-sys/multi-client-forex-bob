@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-Client Forex Platform</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#0f172a;color:#f8fafc}
+header{background:#111827;padding:20px;text-align:center;border-bottom:1px solid #334155}
+header h1{margin:0;font-size:23px}
+.container{width:100%;max-width:1000px;margin:auto;padding:20px}
+.card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:20px;margin-bottom:20px}
+h2,h3{margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:15px}
+.package{background:#172033;border:1px solid #475569;border-radius:12px;padding:18px}
+.package.selected{border:2px solid #22c55e}
+.price{font-size:20px;font-weight:bold;margin:10px 0}
+.fee{font-size:16px;margin-bottom:15px}
+button{width:100%;padding:13px;border:none;border-radius:8px;background:#22c55e;color:white;font-size:15px;font-weight:bold;cursor:pointer}
+button.secondary{background:#475569}
+button:disabled{opacity:.6;cursor:not-allowed}
+label{display:block;margin-bottom:7px;font-weight:bold}
+input,select{width:100%;padding:12px;margin-bottom:15px;border-radius:8px;border:1px solid #475569;background:#0f172a;color:white;font-size:15px}
+.status{padding:12px;border-radius:8px;background:#334155;margin:8px 0}
+.success{color:#22c55e;font-weight:bold}
+.warning{color:#facc15;font-weight:bold}
+.demo{font-size:13px;color:#cbd5e1;background:#111827;border-radius:8px;padding:12px;margin-top:15px}
+.result{background:#0f172a;padding:15px;border-radius:10px;margin-top:15px}
+.admin-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;padding:12px;border-bottom:1px solid #334155}
+.small{font-size:13px;color:#cbd5e1}
+@media(max-width:600px){.container{padding:12px}header h1{font-size:20px}}
+</style>
+</head>
+<body>
+<header>
+<h1>Multi-Client Forex Platform</h1>
+<p class="small">Client & Account Management</p>
+</header>
+
+<div class="container">
+
+<section class="card">
+<h2>Client Dashboard</h2>
+<p><strong>Client ID:</strong> DEMO-001</p>
+<p><strong>Client Name:</strong> Demo Client</p>
+<p><strong>Currency:</strong> USD</p>
+<div class="status"><strong>Account Status:</strong> <span id="accountStatus" class="warning">PAYMENT REQUIRED</span></div>
+<div class="status"><strong>Payment Status:</strong> <span id="paymentStatus">UNPAID</span></div>
+<div class="status"><strong>Selected Package:</strong> <span id="selectedPackage">None</span></div>
+<div class="status"><strong>Performance Fee:</strong> <span id="selectedFee">0%</span></div>
+</section>
+
+<section class="card">
+<h2>Choose Your Package</h2>
+<div class="grid">
+
+<div class="package" id="beginnerCard">
+<h3>Beginner</h3><p>Starting tier</p><div class="price">$10+</div>
+<div class="fee">Performance Fee: <strong>15%</strong></div>
+<button onclick="selectPackage('Beginner',15,10)">Choose Package</button>
+</div>
+
+<div class="package" id="economyCard">
+<h3>Economy</h3><p>Starting tier</p><div class="price">$50+</div>
+<div class="fee">Performance Fee: <strong>20%</strong></div>
+<button onclick="selectPackage('Economy',20,50)">Choose Package</button>
+</div>
+
+<div class="package" id="standardCard">
+<h3>Standard</h3><p>Starting tier</p><div class="price">$200+</div>
+<div class="fee">Performance Fee: <strong>25%</strong></div>
+<button onclick="selectPackage('Standard',25,200)">Choose Package</button>
+</div>
+
+<div class="package" id="premiumCard">
+<h3>Premium</h3><p>Starting tier</p><div class="price">$500+</div>
+<div class="fee">Performance Fee: <strong>30%</strong></div>
+<button onclick="selectPackage('Premium',30,500)">Choose Package</button>
+</div>
+
+</div>
+</section>
+
+<section class="card">
+<h2>Payment</h2>
+<p>Amount required: <strong>$<span id="amountDue">0.00</span> USD</strong></p>
+<button onclick="markDemoPaid()">Mark Payment as Paid — DEMO</button>
+<p id="paymentMessage"></p>
+<div class="demo">DEMO ONLY: No real payment is processed by this button.</div>
+</section>
+
+<section class="card">
+<h2>Performance Fee Calculator</h2>
+<label for="grossProfit">Demo Gross Profit (USD)</label>
+<input id="grossProfit" type="number" min="0" step="0.01" placeholder="Example: 100" oninput="calculateProfit()">
+<div class="result">
+<p>Gross Profit: <strong>$<span id="grossDisplay">0.00</span></strong></p>
+<p>Performance Fee: <strong>$<span id="feeDisplay">0.00</span></strong></p>
+<p>Client Net Profit: <strong>$<span id="netDisplay">0.00</span></strong></p>
+</div>
+<div class="demo">This calculator is for demonstration only. It does not represent actual trading performance or guarantee profit.</div>
+</section>
+
+<section class="card">
+<h2>Trading Account</h2>
+<div class="status"><strong>Broker:</strong> Exness</div>
+<div class="status"><strong>Platform:</strong> MT5</div>
+<div class="status"><strong>Connection:</strong> Not Connected</div>
+<button class="secondary" disabled>Connect Trading Account — Future Phase</button>
+<div class="demo">Live broker connection is not active in this prototype.</div>
+</section>
+
+<section class="card">
+<h2>Admin Overview — Demo</h2>
+<div class="admin-row"><strong>Client</strong><strong>Package</strong><strong>Fee</strong><strong>Status</strong></div>
+<div class="admin-row"><span>DEMO-001</span><span id="adminPackage">None</span><span id="adminFee">0%</span><span id="adminStatus">Unpaid</span></div>
+<div class="demo">Admin data shown here is demonstration data only.</div>
+</section>
+
+</div>
+
+<script>
+let selectedPackageName="";
+let selectedFeePercent=0;
+let selectedMinimum=0;
+
+function selectPackage(name,fee,minimum){
+selectedPackageName=name;
+selectedFeePercent=fee;
+selectedMinimum=minimum;
+document.getElementById("selectedPackage").textContent=name;
+document.getElementById("selectedFee").textContent=fee+"%";
+document.getElementById("amountDue").textContent=minimum.toFixed(2);
+document.getElementById("adminPackage").textContent=name;
+document.getElementById("adminFee").textContent=fee+"%";
+document.querySelectorAll(".package").forEach(card=>card.classList.remove("selected"));
+const cardMap={Beginner:"beginnerCard",Economy:"economyCard",Standard:"standardCard",Premium:"premiumCard"};
+document.getElementById(cardMap[name]).classList.add("selected");
+calculateProfit();
+}
+
+function markDemoPaid(){
+if(!selectedPackageName){alert("Please choose a package first.");return;}
+document.getElementById("paymentStatus").textContent="PAID";
+document.getElementById("paymentStatus").className="success";
+document.getElementById("accountStatus").textContent="ACTIVE — DEMO";
+document.getElementById("accountStatus").className="success";
+document.getElementById("adminStatus").textContent="Paid";
+document.getElementById("paymentMessage").innerHTML='<span class="success">Payment confirmed — DEMO ONLY.</span>';
+}
+
+function calculateProfit(){
+const gross=Number(document.getElementById("grossProfit").value)||0;
+const fee=gross*selectedFeePercent/100;
+const net=gross-fee;
+document.getElementById("grossDisplay").textContent=gross.toFixed(2);
+document.getElementById("feeDisplay").textContent=fee.toFixed(2);
+document.getElementById("netDisplay").textContent=net.toFixed(2);
+}
+</script>
+</body>
+</html>
